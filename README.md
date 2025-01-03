@@ -1,0 +1,2 @@
+# mylocale-react-native
+ 
