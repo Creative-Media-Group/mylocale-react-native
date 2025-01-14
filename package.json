@@ -1,15 +1,18 @@
 {
   "name": "mylocale-react-native",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["localization"],
+  "author": "Creative Media Group",
+  "license": "GPL-3.0-only",
   "description": "",
   "dependencies": {
     "react-native": "^0.76.5"
+  },
+  "devDependencies": {
+    "papaparse": "^5.5.1"
   }
 }
