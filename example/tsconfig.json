@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "mylocale-react-native": ["../src/index"],
+      "mylocale-react-native/*": ["../src/*"]
+    }
+  }
+}

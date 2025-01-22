@@ -1,18 +1,44 @@
 {
   "name": "mylocale-react-native",
-  "version": "3.0.0",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "My new module",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
   },
-  "keywords": ["localization"],
-  "author": "Creative Media Group",
-  "license": "GPL-3.0-only",
-  "description": "",
-  "dependencies": {
-    "react-native": "^0.76.5"
+  "keywords": [
+    "react-native",
+    "expo",
+    "mylocale-react-native",
+    "MylocaleReactNative"
+  ],
+  "repository": "https://github.com/Creative-Media-Group/mylocale-react-native",
+  "bugs": {
+    "url": "https://github.com/Creative-Media-Group/mylocale-react-native/issues"
   },
+  "author": "Creative Media Group <42028373+tct123@users.noreply.github.com> (https://github.com/tct123)",
+  "license": "MIT",
+  "homepage": "https://github.com/Creative-Media-Group/mylocale-react-native#readme",
   "devDependencies": {
-    "papaparse": "^5.5.1"
-  }
+    "@types/node": "^22.10.7",
+    "@types/react": "~18.3.12",
+    "expo": "~52.0.0",
+    "expo-module-scripts": "^4.0.3",
+    "react-native": "0.76.0"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

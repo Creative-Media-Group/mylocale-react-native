@@ -1,5 +1,5 @@
-import Papa from "papaparse";
 import * as fs from "fs/promises"; // Node.js-Dateisystem für asynchrone Operationen
+import Papa from "papaparse";
 
 // Typen für die CSV-Daten
 interface TranslationRow {
@@ -23,7 +23,7 @@ const getSystemLanguage = (): string => {
 export async function tr(
   csvFilePath: string,
   targetKey: string,
-  langcode: string = getSystemLanguage()
+  langcode: string = getSystemLanguage(),
 ): Promise<string> {
   try {
     // CSV-Datei lesen
