@@ -1,55 +1,37 @@
-import * as fs from "fs/promises"; // Node.js-Dateisystem für asynchrone Operationen
+import * as FileSystem from "expo-file-system";
 import Papa from "papaparse";
 
-// Typen für die CSV-Daten
-interface TranslationRow {
-  stringname: string;
-  [key: string]: string; // Dynamische Sprachspalten für verschiedene Sprachen
-}
-
-// Funktion, um die Systemsprache zu ermitteln
-const getSystemLanguage = (): string => {
-  return Intl.DateTimeFormat().resolvedOptions().locale.split("-")[0] || "en";
-};
-
 /**
- * Lädt eine Übersetzung aus einer CSV-Datei.
- *
- * @param csvFilePath - Pfad zur CSV-Datei
- * @param targetKey - Der Schlüssel für die gewünschte Übersetzung
- * @param langcode - Der Sprachcode, standardmäßig die Systemsprache
- * @returns Die Übersetzung als String oder eine Fehlermeldung
+ * Übersetzt einen Schlüssel basierend auf einer CSV-Datei.
+ * @param csvFilePath Der Pfad zur CSV-Datei (lokal).
+ * @param targetKey Der zu übersetzende Schlüssel.
+ * @param langcode Der Sprachcode (z. B. "en", "de").
+ * @returns Übersetzter Text oder der englische Fallback.
  */
 export async function tr(
   csvFilePath: string,
   targetKey: string,
-  langcode: string = getSystemLanguage(),
+  langcode: string = "en",
 ): Promise<string> {
   try {
-    // CSV-Datei lesen
-    const csvContent = await fs.readFile(csvFilePath, "utf-8");
+    // Lade die CSV-Datei aus dem Expo-Dateisystem
+    const csvContent = await FileSystem.readAsStringAsync(csvFilePath);
 
-    // CSV-Daten parsen
-    const parsed = Papa.parse<TranslationRow>(csvContent, {
-      header: true, // Erste Zeile als Header verwenden
-      skipEmptyLines: true, // Leere Zeilen ignorieren
-    });
+    // Parse die CSV-Datei
+    const parsed = Papa.parse(csvContent, { header: true });
+    const rows = parsed.data as Record<string, string>[];
 
-    // Übersetzung anhand des Zielschlüssels suchen
-    const entry = parsed.data.find((row) => row.stringname === targetKey);
-
-    if (!entry) {
-      return `Missing translation for key: ${targetKey}`;
+    // Suche nach dem Zielschlüssel
+    for (const row of rows) {
+      if (row["stringname"] === targetKey) {
+        return row[langcode] || row["en"] || "";
+      }
     }
 
-    // Rückgabe der gewünschten Übersetzung oder der Fallback-Sprache
-    if (!entry[langcode] || entry[langcode].trim() === "") {
-      return entry.en || `Missing fallback translation for key: ${targetKey}`;
-    }
-
-    return entry[langcode];
+    // Fallback, falls der Schlüssel nicht gefunden wurde
+    return `Missing translation for "${targetKey}"`;
   } catch (error) {
-    console.error("Error reading or parsing CSV file:", error);
-    return "Error loading translation.";
+    console.error("Error loading translation:", error);
+    return `Error: Unable to load translations`;
   }
 }
